@@ -1,20 +1,180 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Roster</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-icon-button class="green">
+      <mat-icon>add</mat-icon>
+      Add Player
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="select" sticky>
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="pictureCls">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td class="player-pic {{player.pictureCls}}" mat-cell *matCellDef="let player"> {{player.pictureCls}} </td>
+    </ng-container>
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Number</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.number | number}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input type="number" matInput placeholder="Number" [value]="player.number" [(ngModel)]="player.number">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="playerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Player Name</th>
+      <td mat-cell *matCellDef="let player">
+        <span *ngIf="!player.editing">{{player.playerName}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input matInput placeholder="Player Name" [value]="player.playerName" [(ngModel)]="player.playerName">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="pos">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
+      <td mat-cell *matCellDef="let player">
+        <span *ngIf="!player.editing">{{player.pos}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <mat-select placeholder="Position" [(ngModel)]="player.pos" multiple>
+            <mat-option *ngFor="let position of positions" [value]="position">{{position}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="batArm">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Batting</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.batArm}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <mat-select placeholder="Batting Arm" [(ngModel)]="player.batArm">
+            <mat-option value="L">L</mat-option>
+            <mat-option value="R">R</mat-option>
+            <mat-option value="S">S</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="throwArm">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Throwing</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.throwArm}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <mat-select placeholder="Throw Arm" [(ngModel)]="player.throwArm">
+            <mat-option value="L">L</mat-option>
+            <mat-option value="R">R</mat-option>
+            <mat-option value="S">S</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Height</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.height}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <mat-select placeholder="Height" [(ngModel)]="player.height">
+            <mat-option *ngFor="let height of heights" [value]="height">
+              {{ height }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Weight</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.weight | number}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input type="number" matInput placeholder="Weight" [value]="player.weight" [(ngModel)]="player.weight">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Age</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.age | number}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input type="number" matInput placeholder="Age" [value]="player.age" [(ngModel)]="player.age">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="experience">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Years</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-sm">
+        <span *ngIf="!player.editing">{{player.experience | number}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input type="number" matInput placeholder="Experience" [value]="player.experience" [(ngModel)]="player.experience">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="birthplace">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthplace</th>
+      <td mat-cell *matCellDef="let player">
+        <span *ngIf="!player.editing">{{player.birthplace}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input matInput placeholder="Birhtplace" [value]="player.birthplace" [(ngModel)]="player.birthplace">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="college">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>College</th>
+      <td mat-cell *matCellDef="let player">
+        <span *ngIf="!player.editing">{{player.college}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input matInput placeholder="College" [value]="player.college" [(ngModel)]="player.college">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="salary">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-md">Salary</th>
+      <td mat-cell *matCellDef="let player" class="numberColumn-md">
+        <span *ngIf="!player.editing">{{player.salary | currency:'USD' : true : '1.0' }}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <input type="number" matInput placeholder="Salary" [value]="player.salary" [(ngModel)]="player.salary">
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let player">
+        <span *ngIf="!player.editing">{{player.category}}</span>
+        <mat-form-field *ngIf="player.editing" floatLabel="never">
+          <mat-select placeholder="Category" [(ngModel)]="player.category">
+            <mat-option value="Pitchers">Pitchers</mat-option>
+            <mat-option value="Infielders">Infielders</mat-option>
+            <mat-option value="Outfielders">Outfielders</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let player">
+        <button class="yellow" (click)="editRow(player)" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="openConfirmDialog()" class="red" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+<mat-paginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons sticky></mat-paginator>
