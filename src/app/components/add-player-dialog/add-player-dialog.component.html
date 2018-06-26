@@ -1,0 +1,119 @@
+<h1 mat-dialog-title>Add Player</h1>
+    <div mat-dialog-content>
+      <div class="box">
+      <div class="one">
+        <mat-form-field>
+        <input type="number" matInput placeholder="Number" [value]="player.number" [(ngModel)]="player.number">
+        </mat-form-field>
+      </div>
+      <div class="two">
+        <div class="player-pic player-pic-none"></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="one">
+        <mat-form-field>
+        <input matInput placeholder="Player Name" [value]="player.playerName" [(ngModel)]="player.playerName">
+        </mat-form-field>
+      </div>
+      <div class="two">
+        <mat-form-field>
+        <mat-select placeholder="Position" [(ngModel)]="player.pos" multiple>
+        <mat-option *ngFor="let position of positions" [value]="position">{{position}}</mat-option>
+        </mat-select>
+        </mat-form-field>
+      </div>
+  </div>
+  <div class="box">
+        <div class="one">
+          <mat-form-field>
+          <mat-select placeholder="Batting Arm" [(ngModel)]="player.batArm">
+            <mat-option value="L">L</mat-option>
+            <mat-option value="R">R</mat-option>
+            <mat-option value="S">S</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+        <div class="two">
+        <mat-form-field>
+        <mat-select placeholder="Throw Arm" [(ngModel)]="player.throwArm">
+          <mat-option value="L">L</mat-option>
+          <mat-option value="R">R</mat-option>
+          <mat-option value="S">S</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+        </div>
+      </div>
+
+      <div class="box">
+      <div class="one">
+      <mat-form-field>
+        <mat-select placeholder="Height" [(ngModel)]="player.height">
+          <mat-option *ngFor="let height of heights" [value]="height">
+            {{ height }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      </div>
+      <div class="two">
+      <mat-form-field>
+        <input type="number" matInput placeholder="Weight" [value]="player.weight" [(ngModel)]="player.weight">
+      </mat-form-field>
+      
+            </div>
+    </div>
+
+    <div class="box">
+    <div class="one">
+    <mat-form-field>
+    <input type="number" matInput placeholder="Age" [value]="player.age" [(ngModel)]="player.age">
+  </mat-form-field>
+  
+    </div>
+    <div class="two">
+    <mat-form-field>
+    <input type="number" matInput placeholder="Experience" [value]="player.experience" [(ngModel)]="player.experience">
+  </mat-form-field>
+
+          </div>
+  </div>
+
+  <div class="box">
+    <div class="one">
+    <mat-form-field>
+    <input matInput placeholder="Birhtplace" [value]="player.birthplace" [(ngModel)]="player.birthplace">
+  </mat-form-field>
+    </div>
+    <div class="two">
+    <mat-form-field>
+        <input matInput placeholder="College" [value]="player.college" [(ngModel)]="player.college">
+      </mat-form-field>
+      
+          </div>
+  </div>
+      
+  <div class="box">
+    <div class="one">
+    <mat-form-field>
+    <input type="number" matInput placeholder="Salary" [value]="player.salary" [(ngModel)]="player.salary">
+  </mat-form-field>
+    </div>
+    <div class="two">
+    <mat-form-field>
+    <mat-select placeholder="Category" [(ngModel)]="player.category">
+      <mat-option value="Pitchers">Pitchers</mat-option>
+      <mat-option value="Infielders">Infielders</mat-option>
+      <mat-option value="Outfielders">Outfielders</mat-option>
+    </mat-select>
+  </mat-form-field>
+          </div>
+  </div>
+      
+      
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancelClick()" class="red"><mat-icon>cancel</mat-icon>Cancel</button>
+      <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="green"><mat-icon>save</mat-icon>Save</button>
+    </div>

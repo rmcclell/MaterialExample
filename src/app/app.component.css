@@ -30,3 +30,15 @@ th.mat-column-position, td.mat-column-position {
 .mat-table-sticky:last-child {
     border-left: 1px solid #e0e0e0;
 }
+.box {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.one {
+    flex: 1 1 auto;
+}
+.two {
+    flex: 1 1 auto;
+}

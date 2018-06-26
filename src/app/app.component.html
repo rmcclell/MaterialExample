@@ -1,13 +1,17 @@
-<mat-toolbar color="primary">
+  <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Roster</span>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar>
   <mat-toolbar-row>
-    <button mat-icon-button class="green">
+    <button mat-button class="green" matTooltip="Add New Player" (click)="openAddPlayerDialog()">
       <mat-icon>add</mat-icon>
       Add Player
+    </button>
+    <button mat-button matTooltip="Delete Selected Players" class="red">
+      <mat-icon>delete</mat-icon>
+      Delete Player(s)
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -25,7 +29,9 @@
     </ng-container>
     <ng-container matColumnDef="pictureCls">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td class="player-pic {{player.pictureCls}}" mat-cell *matCellDef="let player"> {{player.pictureCls}} </td>
+      <td mat-cell *matCellDef="let player">
+        <div class="player-pic {{player.pictureCls}}"></div>
+      </td>
     </ng-container>
     <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="numberColumn-sm">Number</th>
@@ -165,16 +171,22 @@
     <ng-container matColumnDef="actions" stickyEnd>
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let player">
-        <button class="yellow" (click)="editRow(player)" mat-icon-button>
+        <button *ngIf="!player.editing" class="yellow" (click)="editRow(player)" matTooltip="Edit Current Player" mat-icon-button>
           <mat-icon>edit</mat-icon>
         </button>
-        <button (click)="openConfirmDialog()" class="red" mat-icon-button>
+        <button *ngIf="!player.editing" (click)="openConfirmDialog()" matTooltip="Delete Player" class="red" mat-icon-button>
           <mat-icon>delete</mat-icon>
         </button>
+        <button *ngIf="player.editing" (click)="cancelEditRow(player)" matTooltip="Cancel Edit" class="red" mat-icon-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button *ngIf="player.editing" (click)="saveEditRow(player)" class="green" matTooltip="Save Changes" mat-icon-button>
+            <mat-icon>save</mat-icon>
+          </button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-<mat-paginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons sticky></mat-paginator>
+<mat-paginator [pageSize]="7" [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons sticky></mat-paginator>

@@ -13,16 +13,22 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { AppComponent, DeleteConfirmDialogComponent } from './app.component';
+import { AppComponent } from './app.component';
+
+import { DeleteConfirmDialogComponent } from './components/delete-confirm-dialog/delete-confirm-dialog.component';
+import { AddPlayerDialogComponent } from './components/add-player-dialog/add-player-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddPlayerDialogComponent,
     DeleteConfirmDialogComponent
   ],
   entryComponents: [
     AppComponent,
+    AddPlayerDialogComponent,
     DeleteConfirmDialogComponent
   ],
   imports: [
@@ -39,6 +45,7 @@ import { AppComponent, DeleteConfirmDialogComponent } from './app.component';
     MatCheckboxModule,
     MatInputModule,
     MatDialogModule,
+    MatTooltipModule,
     MatSelectModule
   ],
   providers: [],
