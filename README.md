@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
 
-![Alt text](MaterialExample/src/assets/screenshot.png?raw=true "Example Screenshot")
+![Alt text](/src/assets/screenshot.png?raw=true "Example Screenshot")
       
 ## Development server
 
