@@ -9,10 +9,7 @@ import { HEIGHTS } from '../../model/heights';
 @Component({
   selector: 'app-add-player-dialog',
   templateUrl: './add-player-dialog.component.html',
-  styleUrls: [
-    './add-player-dialog.component.css',
-    '../../app.component.css'
-  ]
+  styleUrls: ['./add-player-dialog.component.css']
 })
 export class AddPlayerDialogComponent implements OnInit {
 

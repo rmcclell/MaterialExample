@@ -2,5 +2,5 @@
   <div mat-dialog-content><p>Are sure you would like to delete this row?</p></div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()" class="red"><mat-icon>close</mat-icon>No</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="green"><mat-icon>check</mat-icon>Yes</button>
+    <button mat-button [mat-dialog-close]="data" (click)="onYesClick()" cdkFocusInitial class="green"><mat-icon>check</mat-icon>Yes</button>
 </div>

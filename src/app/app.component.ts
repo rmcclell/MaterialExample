@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   openConfirmDialog() {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       width: '250px',
-      data: {}
+      data: { selection: this.selection, roster: this.dataSource}
     });
 
     dialogRef.afterClosed().subscribe(result => {
