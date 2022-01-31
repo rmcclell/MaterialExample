@@ -1,6 +1,6 @@
 # MaterialExample
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
 
 ![Alt text](/src/assets/screenshot.png?raw=true "Example Screenshot")
 
